@@ -17,6 +17,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "https://vagrantcloud.com/puppetlabs/boxes/centos-7.2-64-nocm"
 
   config.puppet_install.puppet_version = "3.7.5"
+  config.vm.synced_folder "puppet/hieradata", "/var/lib/hiera"
 
   config.vm.define "default" do |default|
     default.librarian_puppet.puppetfile_dir = 'puppet'
@@ -30,6 +31,8 @@ Vagrant.configure("2") do |config|
       puppet.module_path = "puppet/modules"
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file= "site.pp"
+      puppet.hiera_config_path = "puppet/hiera.yaml"
+      puppet.options = "--verbose --debug"
     end
   end
 
